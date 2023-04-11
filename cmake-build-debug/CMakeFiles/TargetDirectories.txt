@@ -1,0 +1,3 @@
+/Users/paw1a/CLionProjects/raycast/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/paw1a/CLionProjects/raycast/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/paw1a/CLionProjects/raycast/cmake-build-debug/CMakeFiles/raycast.dir
