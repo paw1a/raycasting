@@ -34,6 +34,32 @@ void draw_rect(SDL_Renderer *renderer, int x, int y, int width, int height) {
     SDL_RenderDrawRect(renderer, &rect);
 }
 
+SDL_Color get_sdl_color(uint32_t color_index) {
+    SDL_Color color;
+    switch (color_index) {
+    case 1:
+        color = (SDL_Color) {255, 0, 0, 255};
+        break;
+    case 2:
+        color = (SDL_Color) {0, 255, 0, 255};
+        break;
+    case 3:
+        color = (SDL_Color) {0, 0, 255, 255};
+        break;
+    case 4:
+        color = (SDL_Color) {255, 255, 255, 255};
+        break;
+    case 5:
+        color = (SDL_Color) {255, 128, 255, 255};
+        break;
+    default:
+        color = (SDL_Color) {0, 0, 0, 255};
+        break;
+    }
+
+    return color;
+}
+
 void clear_renderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);

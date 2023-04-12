@@ -78,12 +78,12 @@ int main() {
                         vec2_sum(camera->pos, vec2_mul(vec2_neg(camera->dir), camera_speed));
                     break;
                 case SDLK_LEFT:
-                    camera->dir = vec2_rotate(camera->dir, -24.0f / 360);
-                    camera->plane = vec2_rotate(camera->plane, -24.0f / 360);
-                    break;
-                case SDLK_RIGHT:
                     camera->dir = vec2_rotate(camera->dir, 24.0f / 360);
                     camera->plane = vec2_rotate(camera->plane, 24.0f / 360);
+                    break;
+                case SDLK_RIGHT:
+                    camera->dir = vec2_rotate(camera->dir, -24.0f / 360);
+                    camera->plane = vec2_rotate(camera->plane, -24.0f / 360);
                     break;
                 }
             }

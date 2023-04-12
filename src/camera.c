@@ -1,5 +1,4 @@
 #include "camera.h"
-#include "draw.h"
 
 #include <SDL.h>
 
