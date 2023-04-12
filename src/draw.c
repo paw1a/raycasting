@@ -1,6 +1,4 @@
 #include "draw.h"
-#include "raycast.h"
-#include "map.h"
 
 #include <stdint.h>
 
@@ -34,37 +32,6 @@ void draw_rect(SDL_Renderer *renderer, int x, int y, int width, int height) {
     rect.h = height;
 
     SDL_RenderDrawRect(renderer, &rect);
-}
-
-void draw_top_view_map(SDL_Renderer *renderer, struct map *map) {
-    const size_t tile_size = 15;
-
-    for (size_t i = 0; i < map->height; i++) {
-        for (size_t j = 0; j < map->width; j++) {
-            uint32_t tile = map->data[i * map->width + j];
-            switch (tile) {
-            case 1:
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-                break;
-            case 2:
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-                break;
-            case 3:
-                SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-                break;
-            case 4:
-                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-                break;
-            case 5:
-                SDL_SetRenderDrawColor(renderer, 255, 128, 255, 255);
-                break;
-            default:
-                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-            }
-
-            fill_rect(renderer, j * tile_size, i * tile_size, tile_size, tile_size);
-        }
-    }
 }
 
 void clear_renderer(SDL_Renderer *renderer) {
