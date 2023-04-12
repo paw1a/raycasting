@@ -3,15 +3,32 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define SCREEN_WIDTH  1080
+#include "draw.h"
+#include "map.h"
+#include "raycast.h"
+
+#define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
 
 struct window_state {
     bool quit;
     SDL_Window *window;
     SDL_Renderer *renderer;
-    unsigned int pixels[SCREEN_WIDTH * SCREEN_HEIGHT];
+    uint32_t pixels[SCREEN_WIDTH * SCREEN_HEIGHT];
 };
+
+struct map *create_map(void) {
+    FILE *file = fopen("../assets/map.txt", "r");
+    if (file == NULL) {
+        printf("failed to open map file\n");
+        return NULL;
+    }
+
+    struct map *map = load_map(file);
+    fclose(file);
+
+    return map;
+}
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -30,11 +47,17 @@ int main() {
         return -1;
     }
 
-    SDL_Renderer *renderer = SDL_CreateRenderer(state->window, -1,
-                                                SDL_RENDERER_ACCELERATED |
-                                                    SDL_RENDERER_PRESENTVSYNC);
-    if (renderer == NULL) {
+    state->renderer = SDL_CreateRenderer(state->window, -1,
+                                         SDL_RENDERER_ACCELERATED |
+                                             SDL_RENDERER_PRESENTVSYNC);
+    if (state->renderer == NULL) {
         printf("failed to create renderer: %s\n", SDL_GetError());
+        return -1;
+    }
+
+    struct map *map = create_map();
+    if (map == NULL) {
+        printf("failed to create map\n");
         return -1;
     }
 
@@ -51,6 +74,13 @@ int main() {
                 }
             }
         }
+
+        clear_renderer(state->renderer);
+
+        draw_top_view_map(state->renderer, map);
+
+        present_renderer(state->renderer);
+        SDL_Delay(10);
     }
 
     SDL_DestroyWindow(state->window);
