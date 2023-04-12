@@ -1,57 +1,57 @@
 #include "raycast.h"
+#include "common.h"
+#include "world.h"
 
 #include <math.h>
 
-struct raycaster *create_raycaster(size_t screen_width, size_t screen_height) {
-    struct raycaster *raycaster = malloc(sizeof(*raycaster) + screen_width * sizeof(struct ray));
-    if (raycaster == NULL)
-        return NULL;
+static struct ray *ray_array;
 
-    raycaster->screen_width = screen_width;
-    raycaster->screen_height = screen_height;
-    raycaster->rays = (struct ray *)(raycaster + 1);
+int create_raycast(void) {
+    ray_array = malloc(SCREEN_WIDTH * sizeof(struct ray));
+    if (ray_array == NULL)
+        return -1;
 
-    return raycaster;
+    return 0;
 }
 
-void update_raycaster(struct raycaster *raycaster, struct tiled_map *map, struct camera *camera) {
-    for (size_t x = 0; x < raycaster->screen_width; x++) {
-        float plane_size = 2.0f * x / raycaster->screen_width - 1;
-        struct vec2 ray_vec = vec2_sum(camera->dir, vec2_mul(camera->plane, plane_size));
+struct ray *compute_rays(struct world *world) {
+    for (size_t x = 0; x < SCREEN_WIDTH; x++) {
+        float plane_size = 2.0f * x / SCREEN_WIDTH - 1;
+        struct vec2 ray_vec = vec2_sum(world->cam_dir, vec2_mul(world->cam_plane, plane_size));
 
-        int map_x = (int)camera->pos.x;
-        int map_y = (int)camera->pos.y;
+        int map_x = (int)world->cam_pos.x;
+        int map_y = (int)world->cam_pos.y;
 
-        float delta_x = fabs(1 / ray_vec.x);
-        float delta_y = fabs(1 / ray_vec.y);
+        float delta_x = fabsf(1 / ray_vec.x);
+        float delta_y = fabsf(1 / ray_vec.y);
 
         float side_dist_x;
         float side_dist_y;
         int step_x;
         int step_y;
 
-        if(ray_vec.x < 0) {
+        if (ray_vec.x < 0) {
             step_x = -1;
-            side_dist_x = (camera->pos.x - map_x) * delta_x;
+            side_dist_x = (world->cam_pos.x - map_x) * delta_x;
         } else {
             step_x = 1;
-            side_dist_x = (map_x + 1.0 - camera->pos.x) * delta_x;
+            side_dist_x = (map_x + 1.0f - world->cam_pos.x) * delta_x;
         }
 
-        if(ray_vec.y < 0) {
+        if (ray_vec.y < 0) {
             step_y = -1;
-            side_dist_y = (camera->pos.y - map_y) * delta_y;
+            side_dist_y = (world->cam_pos.y - map_y) * delta_y;
         } else {
             step_y = 1;
-            side_dist_y = (map_y + 1.0 - camera->pos.y) * delta_y;
+            side_dist_y = (map_y + 1.0 - world->cam_pos.y) * delta_y;
         }
 
         bool hit = false;
         enum ray_hit_side side;
+        struct ray *ray = &ray_array[x];
 
-        while(!hit)
-        {
-            if(side_dist_x < side_dist_y) {
+        while (!hit) {
+            if (side_dist_x < side_dist_y) {
                 side_dist_x += delta_x;
                 map_x += step_x;
                 side = VERTICAL_SIDE;
@@ -61,8 +61,11 @@ void update_raycaster(struct raycaster *raycaster, struct tiled_map *map, struct
                 side = HORIZONTAL_SIDE;
             }
 
-            if(map->data[map_y * map->width + map_x] > 0)
+            uint32_t entry = world->map->data[map_y * world->map->width + map_x];
+            if (entry > 0) {
                 hit = true;
+                ray->hit_entry = entry;
+            }
         }
 
         float ray_length;
@@ -78,11 +81,15 @@ void update_raycaster(struct raycaster *raycaster, struct tiled_map *map, struct
             break;
         }
 
-        struct ray *ray = &raycaster->rays[x];
-        ray->begin = camera->pos;
+        ray->begin = world->cam_pos;
         ray->dir = ray_vec;
         ray->length = ray_length;
-        ray->hit_entry = map->data[map_y * map->width + map_x];
         ray->hit_side = side;
     }
+
+    return ray_array;
+}
+
+void destroy_raycast(void) {
+    free(ray_array);
 }

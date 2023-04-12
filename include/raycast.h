@@ -1,10 +1,9 @@
 #pragma once
 
-#include <stdlib.h>
-#include "vector.h"
 #include "common.h"
-#include "map.h"
-#include "camera.h"
+#include "vector.h"
+#include "world.h"
+#include <stdlib.h>
 
 enum ray_hit_side {
     VERTICAL_SIDE,
@@ -26,5 +25,6 @@ struct raycaster {
     struct ray *rays;
 };
 
-struct raycaster *create_raycaster(size_t screen_width, size_t screen_height);
-void update_raycaster(struct raycaster *raycaster, struct tiled_map *map, struct camera *camera);
+int create_raycast(void);
+struct ray *compute_rays(struct world *world);
+void destroy_raycast(void);

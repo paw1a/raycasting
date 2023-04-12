@@ -86,13 +86,6 @@ build CMakeFiles/raycast.dir/src/raycast.c.o: C_COMPILER__raycast_Debug /Users/p
   OBJECT_DIR = CMakeFiles/raycast.dir
   OBJECT_FILE_DIR = CMakeFiles/raycast.dir/src
 
-build CMakeFiles/raycast.dir/src/draw.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/draw.c || cmake_object_order_depends_target_raycast
-  DEP_FILE = CMakeFiles/raycast.dir/src/draw.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu11
-  INCLUDES = -I/opt/homebrew/include -I/Users/paw1a/CLionProjects/raycast/include -isystem /opt/homebrew/include/SDL2
-  OBJECT_DIR = CMakeFiles/raycast.dir
-  OBJECT_FILE_DIR = CMakeFiles/raycast.dir/src
-
 build CMakeFiles/raycast.dir/src/map.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/map.c || cmake_object_order_depends_target_raycast
   DEP_FILE = CMakeFiles/raycast.dir/src/map.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu11
@@ -100,8 +93,29 @@ build CMakeFiles/raycast.dir/src/map.c.o: C_COMPILER__raycast_Debug /Users/paw1a
   OBJECT_DIR = CMakeFiles/raycast.dir
   OBJECT_FILE_DIR = CMakeFiles/raycast.dir/src
 
-build CMakeFiles/raycast.dir/src/camera.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/camera.c || cmake_object_order_depends_target_raycast
-  DEP_FILE = CMakeFiles/raycast.dir/src/camera.c.o.d
+build CMakeFiles/raycast.dir/src/minimap.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/minimap.c || cmake_object_order_depends_target_raycast
+  DEP_FILE = CMakeFiles/raycast.dir/src/minimap.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu11
+  INCLUDES = -I/opt/homebrew/include -I/Users/paw1a/CLionProjects/raycast/include -isystem /opt/homebrew/include/SDL2
+  OBJECT_DIR = CMakeFiles/raycast.dir
+  OBJECT_FILE_DIR = CMakeFiles/raycast.dir/src
+
+build CMakeFiles/raycast.dir/src/asset.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/asset.c || cmake_object_order_depends_target_raycast
+  DEP_FILE = CMakeFiles/raycast.dir/src/asset.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu11
+  INCLUDES = -I/opt/homebrew/include -I/Users/paw1a/CLionProjects/raycast/include -isystem /opt/homebrew/include/SDL2
+  OBJECT_DIR = CMakeFiles/raycast.dir
+  OBJECT_FILE_DIR = CMakeFiles/raycast.dir/src
+
+build CMakeFiles/raycast.dir/src/render.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/render.c || cmake_object_order_depends_target_raycast
+  DEP_FILE = CMakeFiles/raycast.dir/src/render.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu11
+  INCLUDES = -I/opt/homebrew/include -I/Users/paw1a/CLionProjects/raycast/include -isystem /opt/homebrew/include/SDL2
+  OBJECT_DIR = CMakeFiles/raycast.dir
+  OBJECT_FILE_DIR = CMakeFiles/raycast.dir/src
+
+build CMakeFiles/raycast.dir/src/world.c.o: C_COMPILER__raycast_Debug /Users/paw1a/CLionProjects/raycast/src/world.c || cmake_object_order_depends_target_raycast
+  DEP_FILE = CMakeFiles/raycast.dir/src/world.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -std=gnu11
   INCLUDES = -I/opt/homebrew/include -I/Users/paw1a/CLionProjects/raycast/include -isystem /opt/homebrew/include/SDL2
   OBJECT_DIR = CMakeFiles/raycast.dir
@@ -115,7 +129,7 @@ build CMakeFiles/raycast.dir/src/camera.c.o: C_COMPILER__raycast_Debug /Users/pa
 #############################################
 # Link the executable raycast
 
-build raycast: C_EXECUTABLE_LINKER__raycast_Debug CMakeFiles/raycast.dir/src/main.c.o CMakeFiles/raycast.dir/src/raycast.c.o CMakeFiles/raycast.dir/src/draw.c.o CMakeFiles/raycast.dir/src/map.c.o CMakeFiles/raycast.dir/src/camera.c.o | /opt/homebrew/lib/libSDL2.dylib
+build raycast: C_EXECUTABLE_LINKER__raycast_Debug CMakeFiles/raycast.dir/src/main.c.o CMakeFiles/raycast.dir/src/raycast.c.o CMakeFiles/raycast.dir/src/map.c.o CMakeFiles/raycast.dir/src/minimap.c.o CMakeFiles/raycast.dir/src/asset.c.o CMakeFiles/raycast.dir/src/render.c.o CMakeFiles/raycast.dir/src/world.c.o | /opt/homebrew/lib/libSDL2.dylib
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = /opt/homebrew/lib/libSDL2.dylib
   OBJECT_DIR = CMakeFiles/raycast.dir

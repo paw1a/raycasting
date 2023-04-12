@@ -9,9 +9,11 @@ include_directories(${SDL2_INCLUDE_DIRS} include)
 add_executable(raycast
         src/main.c
         src/raycast.c
-        src/draw.c
         src/map.c
-        src/camera.c
+        src/minimap.c
+        src/asset.c
+        src/render.c
+        src/world.c
         )
 
 target_link_libraries(raycast ${SDL2_LIBRARIES})
