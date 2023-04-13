@@ -64,27 +64,28 @@ struct ray *compute_rays(struct world *world) {
             uint32_t entry = world->map->data[map_y * world->map->width + map_x];
             if (entry > 0) {
                 hit = true;
-                ray->hit_entry = entry;
+                ray->hit_tile = entry;
             }
         }
 
-        float ray_length;
+        float ray_length, hit_x;
         switch (side) {
         case VERTICAL_SIDE:
             ray_length = side_dist_x - delta_x;
+            hit_x = world->cam_pos.y + ray_length * ray_vec.y;
             break;
         case HORIZONTAL_SIDE:
             ray_length = side_dist_y - delta_y;
-            break;
-        default:
-            ray_length = 0;
+            hit_x = world->cam_pos.x + ray_length * ray_vec.x;
             break;
         }
+        hit_x -= floorf(hit_x);
 
         ray->begin = world->cam_pos;
         ray->dir = ray_vec;
         ray->length = ray_length;
         ray->hit_side = side;
+        ray->hit_x = hit_x;
     }
 
     return ray_array;

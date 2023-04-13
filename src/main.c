@@ -13,7 +13,7 @@
 #include "world.h"
 
 #define CAMERA_SPEED 0.2
-#define ROTATE_SPEED (3 * (2 * M_PI / 360))
+#define ROTATE_SPEED (2 * (2 * M_PI / 360))
 
 static int init_game_state(struct game_state *state) {
     state->window =
@@ -39,7 +39,7 @@ static int init_game_state(struct game_state *state) {
     }
 
     state->quit = false;
-    state->mode = WORLD_MODE;
+    state->mode = TEXTURED_WORLD_MODE;
 
     return 0;
 }
@@ -71,7 +71,7 @@ static void handle_events(struct game_state *state, struct world *world) {
                 break;
             case SDLK_m:
                 if (state->mode == MINIMAP_MODE)
-                    state->mode = WORLD_MODE;
+                    state->mode = TEXTURED_WORLD_MODE;
                 else
                     state->mode = MINIMAP_MODE;
                 break;
@@ -121,7 +121,8 @@ int main() {
         case MINIMAP_MODE:
             draw_minimap(state, world);
             break;
-        case WORLD_MODE:
+        case TEXTURED_WORLD_MODE:
+        case COLORED_WORLD_MODE:
             draw_world(state, world);
             SDL_UpdateTexture(state->texture, NULL, state->pixels, SCREEN_WIDTH * 4);
             SDL_RenderCopy(state->renderer, state->texture, NULL, NULL);
@@ -132,6 +133,7 @@ int main() {
         SDL_Delay(10);
     }
 
+    destroy_assets();
     destroy_raycast();
     destroy_world(world);
     SDL_DestroyWindow(state->window);

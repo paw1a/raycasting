@@ -35,5 +35,12 @@ enum texture_type {
     WOOD = 11
 };
 
-SDL_Texture *assets_get_texture(enum texture_type type);
-SDL_Texture* assets_load_texture(const char *filename, SDL_Renderer *renderer);
+struct texture {
+    int width;
+    int height;
+    uint32_t *pixels;
+};
+
+struct texture *assets_get_texture(enum texture_type type);
+struct texture *assets_load_texture(const char *filename, SDL_Renderer *renderer);
+void destroy_assets(void);

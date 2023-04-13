@@ -16,7 +16,8 @@ struct ray {
     float length;
 
     enum ray_hit_side hit_side;
-    uint32_t hit_entry;
+    uint32_t hit_tile;
+    float hit_x;
 };
 
 int create_raycast(void);

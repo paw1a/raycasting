@@ -12,7 +12,8 @@
 
 enum game_mode {
     MINIMAP_MODE,
-    WORLD_MODE
+    COLORED_WORLD_MODE,
+    TEXTURED_WORLD_MODE
 };
 
 struct game_state {
