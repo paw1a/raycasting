@@ -75,6 +75,14 @@ static void handle_events(struct game_state *state, struct world *world) {
                 else
                     state->mode = MINIMAP_MODE;
                 break;
+            case SDLK_p:
+                if (state->mode == TEXTURED_WORLD_MODE || state->mode == COLORED_WORLD_MODE) {
+                    if (state->mode == TEXTURED_WORLD_MODE)
+                        state->mode = COLORED_WORLD_MODE;
+                    else
+                        state->mode = TEXTURED_WORLD_MODE;
+                }
+                break;
             }
         }
     }
