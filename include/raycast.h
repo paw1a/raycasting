@@ -19,12 +19,6 @@ struct ray {
     uint32_t hit_entry;
 };
 
-struct raycaster {
-    size_t screen_width;
-    size_t screen_height;
-    struct ray *rays;
-};
-
 int create_raycast(void);
 struct ray *compute_rays(struct world *world);
 void destroy_raycast(void);

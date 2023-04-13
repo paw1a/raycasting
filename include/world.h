@@ -9,5 +9,5 @@ struct world {
     struct tiled_map *map;
 };
 
-struct world *create_world(char *map_filename);
+struct world *create_world(const char *map_filename);
 void destroy_world(struct world *world);

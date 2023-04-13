@@ -11,7 +11,7 @@ static struct vec2 find_player_position(struct tiled_map *map) {
     return (struct vec2){map->width / 2, map->height / 2};
 }
 
-struct world *create_world(char *map_filename) {
+struct world *create_world(const char *map_filename) {
     FILE *file = fopen(map_filename, "r");
     if (file == NULL) {
         printf("failed to open map file\n");

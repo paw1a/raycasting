@@ -4,7 +4,8 @@ project(raycast C)
 set(CMAKE_C_STANDARD 11)
 
 find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS} include)
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} include)
 
 add_executable(raycast
         src/main.c
@@ -16,4 +17,4 @@ add_executable(raycast
         src/world.c
         )
 
-target_link_libraries(raycast ${SDL2_LIBRARIES})
+target_link_libraries(raycast PRIVATE SDL2::SDL2 SDL2_image::SDL2_image)

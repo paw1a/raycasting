@@ -93,7 +93,12 @@ int main() {
         return -1;
     }
 
-    struct world *world = create_world("../assets/map.txt");
+    if (create_assets(state->renderer)) {
+        printf("failed to create assets\n");
+        return -1;
+    }
+
+    struct world *world = create_world("assets/map.txt");
     if (world == NULL) {
         printf("failed to create world\n");
         return -1;
@@ -107,7 +112,7 @@ int main() {
     while (!state->quit) {
         handle_events(state, world);
 
-        SDL_Color back = colors[0];
+        SDL_Color back = assets_get_color(BLACK);
         SDL_SetRenderDrawColor(state->renderer, back.r, back.g, back.b, back.a);
         SDL_RenderClear(state->renderer);
         memset(state->pixels, 0, SCREEN_WIDTH * SCREEN_HEIGHT * 4);
@@ -127,6 +132,8 @@ int main() {
         SDL_Delay(10);
     }
 
+    destroy_raycast();
+    destroy_world(world);
     SDL_DestroyWindow(state->window);
     SDL_Quit();
 

@@ -23,7 +23,7 @@ void draw_world(struct game_state *state, struct world *world) {
         int line_begin = MAX(-line_height / 2 + SCREEN_HEIGHT / 2, 0);
         int line_end = MIN(line_height / 2 + SCREEN_HEIGHT / 2, SCREEN_HEIGHT - 1);
 
-        SDL_Color color = colors[ray->hit_entry];
+        SDL_Color color = assets_get_color(ray->hit_entry);
         if (ray->hit_side == VERTICAL_SIDE) {
             color.r /= 2;
             color.g /= 2;

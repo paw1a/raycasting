@@ -45,7 +45,7 @@ void draw_minimap(struct game_state *state, struct world *world) {
     for (size_t i = 0; i < map->height; i++) {
         for (size_t j = 0; j < map->width; j++) {
             uint32_t tile = map->data[i * map->width + j];
-            SDL_Color color = colors[tile];
+            SDL_Color color = assets_get_color(tile);
             SDL_SetRenderDrawColor(state->renderer, color.r, color.g, color.b, color.a);
 
             fill_rect(state->renderer, j * tile_size, i * tile_size, tile_size, tile_size);
