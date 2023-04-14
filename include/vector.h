@@ -19,6 +19,10 @@ static inline struct vec2 vec2_sum(struct vec2 v1, struct vec2 v2) {
     return (struct vec2){v1.x + v2.x, v1.y + v2.y};
 }
 
+static inline struct vec2 vec2_sub(struct vec2 v1, struct vec2 v2) {
+    return (struct vec2){v1.x - v2.x, v1.y - v2.y};
+}
+
 static inline struct vec2 vec2_mul(struct vec2 v, float n) {
     return (struct vec2){v.x * n, v.y * n};
 }

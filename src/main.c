@@ -138,7 +138,6 @@ int main() {
         }
 
         SDL_RenderPresent(state->renderer);
-        SDL_Delay(10);
     }
 
     destroy_assets();

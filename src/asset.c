@@ -17,6 +17,8 @@ static void load_colors(void) {
     colors[PINK] = (SDL_Color){255, 192, 200, 255};
     colors[WHITE] = (SDL_Color){255, 255, 255, 255};
     colors[PURPLE] = (SDL_Color){128, 0, 64, 255};
+    colors[FLOOR] = (SDL_Color){150, 75, 0, 255};
+    colors[CEILING] = (SDL_Color){72, 72, 72, 255};
 }
 
 int create_assets(SDL_Renderer *renderer) {
@@ -71,8 +73,8 @@ static uint32_t get_pixel(SDL_Surface *surface, int x, int y) {
 }
 
 struct texture *assets_load_texture(const char *filename, SDL_Renderer *renderer) {
-    SDL_Surface* surface = IMG_Load(filename);
-    if(surface == NULL) {
+    SDL_Surface *surface = IMG_Load(filename);
+    if (surface == NULL) {
         printf("failed to load image %s: %s\n", filename, IMG_GetError());
         return NULL;
     }

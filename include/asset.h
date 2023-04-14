@@ -4,7 +4,7 @@
 
 int create_assets(SDL_Renderer *renderer);
 
-#define COLORS_COUNT 9
+#define COLORS_COUNT 11
 enum color_type {
     BLACK = 0,
     RED = 1,
@@ -15,6 +15,8 @@ enum color_type {
     PINK = 6,
     WHITE = 7,
     PURPLE = 8,
+    FLOOR = 9,
+    CEILING = 10
 };
 
 SDL_Color assets_get_color(enum color_type type);
