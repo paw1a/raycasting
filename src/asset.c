@@ -1,4 +1,5 @@
 #include "asset.h"
+#include "sprite.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -42,6 +43,8 @@ int create_assets(SDL_Renderer *renderer) {
             printf("failed to load texture with index %zu\n", i);
             return -1;
         }
+
+    create_sprites();
 
     return 0;
 }

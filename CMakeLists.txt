@@ -15,6 +15,7 @@ add_executable(raycast
         src/asset.c
         src/render.c
         src/world.c
+        src/sprite.c
         )
 
 target_link_libraries(raycast PRIVATE SDL2::SDL2 SDL2_image::SDL2_image)

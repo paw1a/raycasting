@@ -1,16 +1,5 @@
 #include "world.h"
 
-static struct vec2 find_player_position(struct tiled_map *map) {
-    for (size_t i = 0; i < map->height; i++)
-        for (size_t j = 0; j < map->width; j++)
-            if (map->data[i * map->width + j] == TILE_TYPE_PLAYER) {
-                map->data[i * map->width + j] = 0;
-                return (struct vec2){j, i};
-            }
-
-    return (struct vec2){map->width / 2, map->height / 2};
-}
-
 struct world *create_world(const char *map_filename) {
     FILE *file = fopen(map_filename, "r");
     if (file == NULL) {
@@ -18,7 +7,8 @@ struct world *create_world(const char *map_filename) {
         return NULL;
     }
 
-    struct tiled_map *map = load_tiled_map(file);
+    struct vec2 player_pos;
+    struct tiled_map *map = load_tiled_map(file, &player_pos);
     if (map == NULL) {
         printf("failed to create map\n");
         fclose(file);
@@ -34,7 +24,7 @@ struct world *create_world(const char *map_filename) {
     }
 
     world->map = map;
-    world->cam_pos = find_player_position(map);
+    world->cam_pos = player_pos;
     world->cam_dir = (struct vec2){0, 1};
     world->cam_plane = (struct vec2){0.66f, 0};
 

@@ -24,17 +24,17 @@ SDL_Color assets_get_color(enum color_type type);
 #define TEXTURES_COUNT 12
 enum texture_type {
     EMPTY = 0,
-    BARREL = 1,
-    BLUE_STONE = 2,
-    COLOR_STONE = 3,
-    EAGLE = 4,
-    GREEN_LIGHT = 5,
-    GREY_STONE = 6,
-    MOSSY = 7,
-    PILLAR = 8,
-    PURPLE_STONE = 9,
-    RED_BRICK = 10,
-    WOOD = 11
+    BARREL = 9,
+    BLUE_STONE = 5,
+    COLOR_STONE = 8,
+    EAGLE = 1,
+    GREEN_LIGHT = 11,
+    GREY_STONE = 4,
+    MOSSY = 6,
+    PILLAR = 10,
+    PURPLE_STONE = 3,
+    RED_BRICK = 2,
+    WOOD = 7
 };
 
 struct texture {

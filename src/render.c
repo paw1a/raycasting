@@ -2,6 +2,7 @@
 #include "asset.h"
 #include "common.h"
 #include "raycast.h"
+#include "sprite.h"
 #include "world.h"
 
 static uint32_t sdl_color_to_uint32(SDL_Color color) {
@@ -11,6 +12,59 @@ static uint32_t sdl_color_to_uint32(SDL_Color color) {
     num |= (color.a << 24);
 
     return num;
+}
+
+static void draw_sprites(struct game_state *state, struct world *world, struct ray *rays) {
+    sort_sprites_by_distance(world->cam_pos);
+
+    for (int i = 0; i < SPRITES_COUNT; i++) {
+        struct sprite sprite = get_sprite(i);
+        struct vec2 sprite_vec = vec2_sub(sprite.pos, world->cam_pos);
+
+        float inv_det =
+            1.0f / (world->cam_plane.x * world->cam_dir.y - world->cam_dir.x * world->cam_plane.y);
+
+        float transform_x =
+            inv_det * (world->cam_dir.y * sprite_vec.x - world->cam_dir.x * sprite_vec.y);
+        float transform_y =
+            inv_det * (-world->cam_plane.y * sprite_vec.x + world->cam_plane.x * sprite_vec.y);
+        int sprite_screen_x = (int)((SCREEN_WIDTH / 2) * (1 + transform_x / transform_y));
+
+        int sprite_height = abs((int)(SCREEN_HEIGHT / transform_y));
+
+        int line_begin_y = -sprite_height / 2 + SCREEN_HEIGHT / 2;
+        if (line_begin_y < 0)
+            line_begin_y = 0;
+        int line_end_y = sprite_height / 2 + SCREEN_HEIGHT / 2;
+        if (line_end_y >= SCREEN_HEIGHT)
+            line_end_y = SCREEN_HEIGHT - 1;
+
+        int sprite_width = abs((int)(SCREEN_HEIGHT / transform_y));
+
+        int line_begin_x = -sprite_width / 2 + sprite_screen_x;
+        if (line_begin_x < 0)
+            line_begin_x = 0;
+        int line_end_x = sprite_width / 2 + sprite_screen_x;
+        if (line_end_x >= SCREEN_WIDTH)
+            line_end_x = SCREEN_WIDTH - 1;
+
+        struct texture *texture = sprite.texture;
+        for (int stripe = line_begin_x; stripe < line_end_x; stripe++) {
+            int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) *
+                              texture->width / sprite_width) /
+                        256;
+            if (transform_y > 0 && stripe > 0 && stripe < SCREEN_WIDTH &&
+                transform_y < rays[stripe].length) {
+                for (int y = line_begin_y; y < line_end_y; y++) {
+                    int d = y * 256 - SCREEN_HEIGHT * 128 + sprite_height * 128;
+                    int tex_y = ((d * texture->height) / sprite_height) / 256;
+                    uint32_t color = texture->pixels[tex_y * texture->width + tex_x];
+                    if ((color & 0x00FFFFFF) != 0)
+                        state->pixels[y * SCREEN_WIDTH + stripe] = color;
+                }
+            }
+        }
+    }
 }
 
 static void draw_floor_and_ceiling(struct game_state *state, struct world *world) {
@@ -112,4 +166,7 @@ void draw_world(struct game_state *state, struct world *world) {
             }
         }
     }
+
+    if (state->mode == TEXTURED_WORLD_MODE)
+        draw_sprites(state, world, rays);
 }

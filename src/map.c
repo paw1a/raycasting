@@ -1,9 +1,14 @@
 #include "map.h"
 
-struct tiled_map *load_tiled_map(FILE *file) {
+struct tiled_map *load_tiled_map(FILE *file, struct vec2 *player_pos) {
     size_t width, height;
     if (fscanf(file, "%zu%zu", &width, &height) != 2) {
         printf("invalid map sizes\n");
+        return NULL;
+    }
+
+    if (fscanf(file, "%f%f", &player_pos->x, &player_pos->y) != 2) {
+        printf("invalid player coordinates\n");
         return NULL;
     }
 

@@ -13,7 +13,7 @@
 #include "world.h"
 
 #define CAMERA_SPEED 0.2
-#define ROTATE_SPEED (2 * (2 * M_PI / 360))
+#define ROTATE_SPEED (4 * (2 * M_PI / 360))
 
 static int init_game_state(struct game_state *state) {
     state->window =
@@ -106,7 +106,7 @@ int main() {
         return -1;
     }
 
-    struct world *world = create_world("assets/map.txt");
+    struct world *world = create_world("assets/level.txt");
     if (world == NULL) {
         printf("failed to create world\n");
         return -1;
